@@ -3,6 +3,7 @@ import re
 from pathlib import Path
 
 import pandas as pd
+from tabulate import tabulate
 
 
 MESSAGE_PATTERN = re.compile(
@@ -237,7 +238,7 @@ def main():
 			display_table = compare_owner_kilometers(table, car_owners)
 	else:
 		display_table = table.reindex(columns=["date", "time", "Integrantes", "Km"]) if args.compact else table
-	print(display_table.to_string(index=False))
+	print(tabulate(display_table, headers="keys", tablefmt="grid", showindex=False, floatfmt=".2f"))
 
 	if args.output_csv:
 		table.to_csv(args.output_csv, index=False, encoding="utf-8-sig")
